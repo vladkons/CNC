@@ -254,7 +254,7 @@ public class AttendeeService {
             String handle = att.getTwitter();
             // Tweet, if the user actually exists 
             if (handle!=null && handle.length()>0 && twitterUserExists(att.getTwitter())){
-                tweet(att.getTwitter(), att.getImageAssoc()); 
+                tweet(att.getTwitter(), att.getName(), att.getImageAssoc()); 
             }
                                         
         } catch (Exception e) {
@@ -304,7 +304,7 @@ public class AttendeeService {
     }
 
 // Using @odevcommunity twitter account
-    private void tweet(String handle, String encodedImage) throws Exception {
+    private void tweet(String handle, String name, String encodedImage) throws Exception {
         
         ConfigurationBuilder build = new ConfigurationBuilder();
         //As passed for @odevcommunity
@@ -319,8 +319,10 @@ public class AttendeeService {
             User user = twitter.verifyCredentials();
             System.out.println(user.getScreenName());
             
-            StatusUpdate status = new StatusUpdate("@" + handle + " attended OOW2017 in San Francisco.");
-            
+//            StatusUpdate status = new StatusUpdate("@" + handle + " attended OOW2017 in San Francisco.");
+//                    
+            StatusUpdate status = new StatusUpdate( 
+                            name + " (@" + handle + ") participated in the #devlounge CNC Matrix LightSculpture at #OOW/#JavaOne/#OracleCode.");
             ByteArrayInputStream bis = new ByteArrayInputStream(Base64.decodeBase64(encodedImage));
                  
             status.setMedia("Picture", bis);
